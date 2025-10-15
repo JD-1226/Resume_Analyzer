@@ -34,3 +34,33 @@ pre {
     max-height: 300px;
     overflow-y: auto;
 }
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 80%;
+    background: #ffffff;
+} 
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+} 
+
+th {
+    background-color: #4CAF50;
+    color: white;
+} 
+
+a {
+    color: #007bff;
+    text-decoration: none;
+} 
+
+a:hover {
+    text-decoration: underline;
+}
+
+h2 {
+    color: #2c3e50;
+} 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search Results</title>
+    <link rel='stylesheet' href= "{% static  "style.css" %}">
+</head>
+<body>
+    <h2>Job Search Links Based on Your Skills</h2>
+
+    {% if job_links %} 
+    <table>
+        <tr>
+            <th>Skill</th>
+            <th>Linkedin</th>
+            <th>Naukri</th>
+            <th>Google</th>
+        </tr>
+
+        {% for job in job_links %} 
+        <tr>
+            <td> {{ job.skill }} </td>
+            <td><a href= "{{ job.linkedin}}" target="_blank">Linkedin Jobs</a></td>
+            <td><a href= "{{ job.naukri}}" target="_blank">Naukri Jobs</a></td>
+            <td><a href= "{{ job.google}}" target="_blank">Google Jobs</a></td>
+        </tr>
+
+        {% endfor %} 
+
+    </table>
+
+    {% else %} 
+        <p>No skills found in the resume.</p>
+    {% endif %}
+
+</body>
+</html>
