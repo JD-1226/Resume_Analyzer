@@ -8,23 +8,54 @@
     <link rel='stylesheet' href= "{% static  "style.css" %}">
 </head>
 <body>
-    <h2>Job Search Links Based on Your Skills</h2>
 
-    {% if job_links %} 
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <div class="loading-text">Fetching jobs... please wait</div>
+    </div> 
+
+    <h2>Available {{ search_type|title }}s Based on your Resume.</h2> 
+
+
+    <div class="toggle-buttons">
+        <a href= "?type=job" class= "button {% if search_type == 'job' %}{% else %} inactive {% endif %}"> Jobs</a>
+        <a href= "?type=intern" class= "button {% if search_type == 'intern' %}{% else %} inactive {% endif %}"> Interships</a>
+    </div> 
+
+    {% if all_jobs %} 
     <table>
         <tr>
             <th>Skill</th>
-            <th>Linkedin</th>
-            <th>Naukri</th>
-            <th>Google</th>
+            <th>Job Title</th>
+            <th>Company</th>
+            <th>Location</th>
+            <th>Source</th>
+            <th>Posted</th>
+            <th>Link</th>
         </tr>
 
-        {% for job in job_links %} 
+        {% for job in all_jobs %} 
         <tr>
             <td> {{ job.skill }} </td>
-            <td><a href= "{{ job.linkedin}}" target="_blank">Linkedin Jobs</a></td>
-            <td><a href= "{{ job.naukri}}" target="_blank">Naukri Jobs</a></td>
-            <td><a href= "{{ job.google}}" target="_blank">Google Jobs</a></td>
+            <td> {{ job.title }} </td>
+            <td> {{ job.company }} </td>
+            <td> {{ job.location }}</td>
+            <td>
+                <span clas="source-badge
+                    {% if job.source == 'LinkedIn' %} 
+                        Linkedin
+                    {% elif job.source == 'Naukri' %} 
+                        Naukri
+                    {% elif job.source == 'Indeed' %} 
+                        Indeed
+                    {% else %} 
+                        Google 
+                    {% endif%}">
+                    {{ job.source }}
+                </span>
+            </td>
+            <td>{{ job.posted|default:"N/A"}} </td>
+            <td><a href= "{{ job.link }}" target="_blank" class= "job-link"> View Job </a></td>
         </tr>
 
         {% endfor %} 
@@ -32,8 +63,17 @@
     </table>
 
     {% else %} 
-        <p>No skills found in the resume.</p>
+        <p>No Results Found for {{ search_type }}s.</p> 
     {% endif %}
 
+    <script>
+        // Hide loading screen once content is fully loaded
+        window.addEventListener("load", function() {
+            const loader = document.getElementById("loading-screen");
+            loader.style.opacity = "0";
+            setTimeout(() => loader.style.display = "none", 500);
+        });
+    </script>
+    
 </body>
 </html>
